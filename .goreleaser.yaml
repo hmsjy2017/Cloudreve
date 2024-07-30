@@ -24,7 +24,12 @@ builds:
       - amd64
       - arm
       - arm64
-
+      - riscv64
+      - mips64le
+      - ppc64le
+      - loong64
+      - s390x
+      
     goarm:
       - 5
       - 6
