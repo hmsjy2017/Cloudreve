@@ -17,13 +17,21 @@ builds:
 
     goos:
       - linux
-      - windows
-      - darwin
+      - freebsd
+      - openbsd
+      - netbsd
+      - dragonfly
 
     goarch:
       - amd64
+      - 386
       - arm
       - arm64
+      - riscv64
+      - loong64
+      - mips64le
+      - ppc64le
+      - s390x
 
     goarm:
       - 5
@@ -32,11 +40,64 @@ builds:
 
     ignore:
       - goos: windows
-        goarm: 5
+        goarch: arm64
       - goos: windows
-        goarm: 6
+        goarch: riscv64
       - goos: windows
-        goarm: 7
+        goarch: windows
+      - goos: windows
+        goarch: windows
+      - goos: windows
+        goarch: ppc64le
+      - goos: windows
+        goarch: s390x
+      - goos: freebsd
+        goarch: riscv64
+      - goos: freebsd
+        goarch: loong64
+      - goos: freebsd
+        goarch: mips64le
+      - goos: freebsd
+        goarch: ppc64le
+      - goos: freebsd
+        goarch: s390x
+      - goos: openbsd
+        goarch: riscv64
+      - goos: openbsd
+        goarch: loong64
+      - goos: openbsd
+        goarch: mips64le
+      - goos: openbsd
+        goarch: ppc64le
+      - goos: openbsd
+        goarch: s390x
+      - goos: netbsd
+        goarch: riscv64
+      - goos: netbsd
+        goarch: loong64
+      - goos: netbsd
+        goarch: mips64le
+      - goos: netbsd
+        goarch: ppc64le
+      - goos: netbsd
+        goarch: s390x
+      - goos: dragonfly
+        goarch: 386
+      - goos: dragonfly
+        goarch: arm
+      - goos: dragonfly
+        goarch: arm64
+      - goos: dragonfly
+        goarch: riscv64
+      - goos: dragonfly
+        goarch: loong64
+      - goos: dragonfly
+        goarch: mips64le
+      - goos: dragonfly
+        goarch: ppc64le
+      - goos: dragonfly
+        goarch: s390x
+
 
 archives:
   - format: tar.gz
@@ -64,58 +125,3 @@ release:
   prerelease: auto
   target_commitish: '{{ .Commit }}'
   name_template: "{{.Version}}"
-
-dockers:
-  -
-    dockerfile: Dockerfile
-    use: buildx
-    build_flag_templates:
-      - "--platform=linux/amd64"
-    goos: linux
-    goarch: amd64
-    goamd64: v1
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-amd64"
-  -
-    dockerfile: Dockerfile
-    use: buildx
-    build_flag_templates:
-      - "--platform=linux/arm64"
-    goos: linux
-    goarch: arm64
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-arm64"
-  -
-    dockerfile: Dockerfile
-    use: buildx
-    build_flag_templates:
-      - "--platform=linux/arm/v6"
-    goos: linux
-    goarch: arm
-    goarm: '6'
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-armv6"
-  -
-    dockerfile: Dockerfile
-    use: buildx
-    build_flag_templates:
-      - "--platform=linux/arm/v7"
-    goos: linux
-    goarch: arm
-    goarm: '7'
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-armv7"
-
-docker_manifests:
-  - name_template: "cloudreve/cloudreve:latest"
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-amd64"
-      - "cloudreve/cloudreve:{{ .Tag }}-arm64"
-      - "cloudreve/cloudreve:{{ .Tag }}-armv6"
-      - "cloudreve/cloudreve:{{ .Tag }}-armv7"
-  - name_template: "cloudreve/cloudreve:{{ .Tag }}"
-    image_templates:
-      - "cloudreve/cloudreve:{{ .Tag }}-amd64"
-      - "cloudreve/cloudreve:{{ .Tag }}-arm64"
-      - "cloudreve/cloudreve:{{ .Tag }}-armv6"
-      - "cloudreve/cloudreve:{{ .Tag }}-armv7"
