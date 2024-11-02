@@ -61,6 +61,8 @@ builds:
       - goos: freebsd
         goarch: s390x
       - goos: openbsd
+        goarch: arm
+      - goos: openbsd
         goarch: riscv64
       - goos: openbsd
         goarch: loong64
